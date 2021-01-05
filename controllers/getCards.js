@@ -1,5 +1,5 @@
-const readJsonFiles = require('../utils/readJsonFiles');
 const path = require('path');
+const readJsonFiles = require('../utils/readJsonFiles');
 
 const getCards = (req, res) => {
   readJsonFiles(path.join(__dirname, '..', 'data', 'cards.json'))
@@ -8,9 +8,8 @@ const getCards = (req, res) => {
       res.send(req.cards);
     })
     .catch(() => {
-      res.status(500).send({message: '...'});
-    })
+      res.status(500).send({ message: '...' });
+    });
 };
 
 module.exports = getCards;
-

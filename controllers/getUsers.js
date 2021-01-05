@@ -1,5 +1,5 @@
-const readJsonFiles = require('../utils/readJsonFiles');
 const path = require('path');
+const readJsonFiles = require('../utils/readJsonFiles');
 
 const getUsers = (req, res) => {
   readJsonFiles(path.join(__dirname, '..', 'data', 'users.json'))
@@ -8,8 +8,8 @@ const getUsers = (req, res) => {
       res.send(req.users);
     })
     .catch(() => {
-      res.status(500).send({message: '...'});
-    })
+      res.status(500).send({ message: '...' });
+    });
 };
 
 const getUser = (req, res) => {
@@ -22,11 +22,10 @@ const getUser = (req, res) => {
       return res.send(user);
     })
     .catch(() => {
-      res.status(500).send({message: '...'});
-    })
+      res.status(500).send({ message: '...' });
+    });
 };
 
 module.exports = {
   getUsers, getUser,
 };
-
