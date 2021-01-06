@@ -4,11 +4,10 @@ const readJsonFiles = require('../utils/readJsonFiles');
 const getCards = (req, res) => {
   readJsonFiles(path.join(__dirname, '..', 'data', 'cards.json'))
     .then((cards) => {
-      req.cards = cards;
-      res.send(req.cards);
+      res.send(cards);
     })
-    .catch(() => {
-      res.status(500).send({ message: '...' });
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
     });
 };
 
