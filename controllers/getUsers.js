@@ -1,8 +1,7 @@
-const path = require('path');
-const readJsonFiles = require('../utils/readJsonFiles');
+const User = require('../models/user');
 
 const getUsers = (req, res) => {
-  readJsonFiles(path.join(__dirname, '..', 'data', 'users.json'))
+  User.find({})
     .then((users) => {
       res.send(users);
     })
@@ -12,8 +11,9 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  readJsonFiles(path.join(__dirname, '..', 'data', 'users.json'))
-    .then((users) => users.find((user) => user._id === req.params.id))
+  const { id } = req.params;
+
+  User.findOne({id})
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Нет пользователя с таким id' });
@@ -25,6 +25,11 @@ const getUser = (req, res) => {
     });
 };
 
-module.exports = {
-  getUsers, getUser,
+const createUser = (req, res) => {
+  const { name, about, avatar } = req.body;
+  User.create({ name, about, avatar })
+    .then(user => res.send({ user }))
+    .catch(err => res.status(400).send(err))
 };
+
+module.exports = { getUsers, getUser, createUser };
