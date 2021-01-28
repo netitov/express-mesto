@@ -1,8 +1,7 @@
-const path = require('path');
-const readJsonFiles = require('../utils/readJsonFiles');
+const Card = require('../models/card');
 
 const getCards = (req, res) => {
-  readJsonFiles(path.join(__dirname, '..', 'data', 'cards.json'))
+  Card.find({})
     .then((cards) => {
       res.send(cards);
     })
@@ -11,4 +10,23 @@ const getCards = (req, res) => {
     });
 };
 
-module.exports = getCards;
+const createCard = (req, res) => {
+  const { name, link } = req.body;
+  Card.create({ name, link })
+    .then(card => res.send({ card }))
+    .catch(err => res.status(400).send(err))
+};
+
+const deleteCard = (req, res) => {
+  const { cardId } = req.params;
+  User.findById(cardId)
+    .then((card) => {
+      if (!card) {
+        return res.status(404).send({ message: 'Нет карточки с таким id' });
+      }
+      return res.send({ card })
+    })
+    .catch(err => res.status(400).send(err))
+};
+
+module.exports = { getCards, createCard, deleteCard };
