@@ -1,5 +1,12 @@
 const Card = require('../models/card');
 
+const checkDataError = (res, err) => {
+  if(err.name === 'ValidationError') {
+    return res.status(400).send({ message: `Переданы неверные/ неполные данные: ${err}` })
+  }
+  return res.status(500).send({ message: `На сервере произошла ошибка ${err}` })
+}
+
 const getCards = (req, res) => {
   Card.find({})
     .then((cards) => {
@@ -15,7 +22,7 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: ownerId })
     .then(card => res.send({ card }))
-    .catch(err => res.status(400).send(err))
+    .catch(err => checkDataError(res, err))
 };
 
 const deleteCard = (req, res) => {
@@ -27,7 +34,7 @@ const deleteCard = (req, res) => {
       }
       return res.send({ card })
     })
-    .catch(err => res.status(400).send(err))
+    .catch(err => checkDataError(res, err))
 };
 
 const setLike = (req, res) => {
@@ -43,7 +50,7 @@ const setLike = (req, res) => {
       }
       return res.send({ card })
     })
-    .catch(err => res.status(400).send(err))
+    .catch(err => checkDataError(res, err))
 };
 
 const deleteLike = (req, res) => {
@@ -59,7 +66,7 @@ const deleteLike = (req, res) => {
       }
       return res.send({ card })
     })
-    .catch(err => res.status(400).send(err))
+    .catch(err => checkDataError(res, err))
 };
 
 
