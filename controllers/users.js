@@ -33,14 +33,28 @@ const createUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about })
+  User.findByIdAndUpdate(
+    req.user._id,
+    { name, about },
+    {
+      new: true,
+      runValidators: true
+    }
+  )
   .then(user => res.send({ user }))
   .catch(err => res.status(400).send(err))
 }
 
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar })
+  User.findByIdAndUpdate(
+    req.user._id,
+    { avatar },
+    {
+      new: true,
+      runValidators: true
+    }
+    )
   .then(user => res.send({ user }))
   .catch(err => res.status(400).send(err))
 }
