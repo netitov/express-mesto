@@ -1,11 +1,11 @@
 const User = require('../models/user');
 
 const checkDataError = (res, err) => {
-  if(err.name === 'ValidationError') {
-    return res.status(400).send({ message: `Переданы неверные/ неполные данные: ${err}` })
+  if (err.name === 'ValidationError') {
+    return res.status(400).send({ message: `Переданы неверные/ неполные данные: ${err}` });
   }
-  return res.status(500).send({ message: `На сервере произошла ошибка ${err}` })
-}
+  return res.status(500).send({ message: `На сервере произошла ошибка ${err}` });
+};
 
 const getUsers = (req, res) => {
   User.find({})
@@ -34,8 +34,8 @@ const getUser = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then(user => res.send({ user }))
-    .catch(err => checkDataError(res, err))
+    .then((user) => res.send({ user }))
+    .catch((err) => checkDataError(res, err));
 };
 
 const updateUser = (req, res) => {
@@ -45,12 +45,12 @@ const updateUser = (req, res) => {
     { name, about },
     {
       new: true,
-      runValidators: true
-    }
+      runValidators: true,
+    },
   )
-  .then(user => res.send({ user }))
-  .catch(err => checkDataError(res, err))
-}
+    .then((user) => res.send({ user }))
+    .catch((err) => checkDataError(res, err));
+};
 
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -59,11 +59,13 @@ const updateAvatar = (req, res) => {
     { avatar },
     {
       new: true,
-      runValidators: true
-    }
-    )
-  .then(user => res.send({ user }))
-  .catch(err => checkDataError(res, err))
-}
+      runValidators: true,
+    },
+  )
+    .then((user) => res.send({ user }))
+    .catch((err) => checkDataError(res, err));
+};
 
-module.exports = { getUsers, getUser, createUser, updateUser, updateAvatar };
+module.exports = {
+  getUsers, getUser, createUser, updateUser, updateAvatar,
+};

@@ -12,11 +12,11 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        const regex = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+        const regex = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
         return regex.test(v);
       },
-      message: 'Некорректная ссылка на аватар'
-    }
+      message: 'Некорректная ссылка на аватар',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,7 @@ const cardSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  }
-})
+  },
+});
 
 module.exports = mongoose.model('card', cardSchema);

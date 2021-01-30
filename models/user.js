@@ -18,12 +18,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        const regex = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+        const regex = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
         return regex.test(v);
       },
-      message: 'Некорректная ссылка на аватар'
-    }
-  }
-})
+      message: 'Некорректная ссылка на аватар',
+    },
+  },
+});
 
 module.exports = mongoose.model('user', userSchema);
