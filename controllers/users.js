@@ -11,8 +11,8 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  const { id } = req.params;
-  User.findOne({id})
+  const { userId } = req.params;
+  User.findOne({ _id: userId })
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Нет пользователя с таким id' });
@@ -31,4 +31,18 @@ const createUser = (req, res) => {
     .catch(err => res.status(400).send(err))
 };
 
-module.exports = { getUsers, getUser, createUser };
+const updateUser = (req, res) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about })
+  .then(user => res.send({ user }))
+  .catch(err => res.status(400).send(err))
+}
+
+const updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { avatar })
+  .then(user => res.send({ user }))
+  .catch(err => res.status(400).send(err))
+}
+
+module.exports = { getUsers, getUser, createUser, updateUser, updateAvatar };
