@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 const checkDataError = (res, err) => {
-  if (err.name === 'ValidationError') {
+  if ((err.name === 'ValidationError') || (err.name === 'CastError')) {
     return res.status(400).send({ message: `Переданы неверные/ неполные данные: ${err}` });
   }
   return res.status(500).send({ message: `На сервере произошла ошибка ${err}` });
@@ -26,9 +26,7 @@ const getUser = (req, res) => {
       }
       return res.send(user);
     })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+    .catch((err) => checkDataError(res, err));
 };
 
 const createUser = (req, res) => {
